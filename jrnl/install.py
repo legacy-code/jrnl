@@ -2,12 +2,12 @@
 # encoding: utf-8
 
 from __future__ import absolute_import
-import readline
+#import readline
 import glob
 import getpass
 import json
 import os
-from . import util
+import util
 
 
 def module_exists(module_name):
@@ -58,9 +58,9 @@ def install_jrnl(config_path='~/.jrnl_config'):
         expansions = [e+"/" if os.path.isdir(e) else e for e in expansions]
         expansions.append(None)
         return expansions[state]
-    readline.set_completer_delims(' \t\n;')
-    readline.parse_and_bind("tab: complete")
-    readline.set_completer(autocomplete)
+    #readline.set_completer_delims(' \t\n;')
+    #readline.parse_and_bind("tab: complete")
+    #readline.set_completer(autocomplete)
 
     # Where to create the journal?
     path_query = 'Path to your journal file (leave blank for ~/journal.txt): '
@@ -68,18 +68,19 @@ def install_jrnl(config_path='~/.jrnl_config'):
     default_config['journals']['default'] = os.path.expanduser(os.path.expandvars(journal_path))
 
     # Encrypt it?
-    if module_exists("Crypto"):
-        password = getpass.getpass("Enter password for journal (leave blank for no encryption): ")
-        if password:
-            default_config['encrypt'] = True
-            if util.yesno("Do you want to store the password in your keychain?", default=True):
-                util.set_keychain("default", password)
-            else:
-                util.set_keychain("default", None)
-            print("Journal will be encrypted.")
-    else:
-        password = None
-        print("PyCrypto not found. To encrypt your journal, install the PyCrypto package from http://www.pycrypto.org or with 'pip install pycrypto' and run 'jrnl --encrypt'. For now, your journal will be stored in plain text.")
+    #if module_exists("Crypto"):
+    #    password = getpass.getpass("Enter password for journal (leave blank for no encryption): ")
+    #    if password:
+    #        default_config['encrypt'] = True
+    #        if util.yesno("Do you want to store the password in your keychain?", default=True):
+    #            util.set_keychain("default", password)
+    #        else:
+    #            util.set_keychain("default", None)
+    #        print("Journal will be encrypted.")
+    #else:
+    #    password = None
+    #    print("PyCrypto not found. To encrypt your journal, install the PyCrypto package from http://www.pycrypto.org or with 'pip install pycrypto' and run 'jrnl --encrypt'. For now, your journal will be stored in plain text.")
+    #
 
     path = os.path.split(default_config['journals']['default'])[0]  # If the folder doesn't exist, create it
     try:
@@ -94,6 +95,6 @@ def install_jrnl(config_path='~/.jrnl_config'):
     with open(config_path, 'w') as f:
         json.dump(default_config, f, indent=2)
     config = default_config
-    if password:
-        config['password'] = password
+    #if password:
+    #    config['password'] = password
     return config

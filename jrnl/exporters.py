@@ -4,7 +4,7 @@
 from __future__ import absolute_import, unicode_literals
 import os
 import json
-from .util import u, slugify
+from util import u, slugify
 import codecs
 
 

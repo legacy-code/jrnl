@@ -8,12 +8,15 @@
 """
 
 from __future__ import absolute_import, unicode_literals
-from . import Journal
-from . import DayOneJournal
-from . import util
-from . import exporters
-from . import install
-import jrnl
+import Journal
+#import DayOneJournal
+import util
+import exporters
+import install
+
+#import jrnl
+import Journal
+
 import os
 import argparse
 import sys

@@ -2,9 +2,10 @@
 # encoding: utf-8
 
 from __future__ import absolute_import, unicode_literals
-from . import Entry
-from . import util
-from . import time
+import Entry
+import util
+import time
+import jrnl_time
 import codecs
 import re
 from datetime import datetime
@@ -205,8 +206,8 @@ class Journal(object):
         If strict is True, all tags must be present in an entry. If false, the
         entry is kept if any tag is present."""
         self.search_tags = set([tag.lower() for tag in tags])
-        end_date = time.parse(end_date, inclusive=True)
-        start_date = time.parse(start_date)
+        end_date = jrnl_time.parse(end_date, inclusive=True)
+        start_date = jrnl_time.parse(start_date)
 
         # If strict mode is on, all tags have to be present in entry
         tagged = self.search_tags.issubset if strict else self.search_tags.intersection
@@ -246,7 +247,7 @@ class Journal(object):
         if not date:
             if title.find(": ") > 0:
                 starred = "*" in title[:title.find(": ")]
-                date = time.parse(title[:title.find(": ")], default_hour=self.config['default_hour'], default_minute=self.config['default_minute'])
+                date = jrnl_time.parse(title[:title.find(": ")], default_hour=self.config['default_hour'], default_minute=self.config['default_minute'])
                 if date or starred:  # Parsed successfully, strip that from the raw text
                     title = title[title.find(": ")+1:].strip()
             elif title.strip().startswith("*"):
@@ -256,7 +257,7 @@ class Journal(object):
                 starred = True
                 title = title[:-1].strip()
         if not date:  # Still nothing? Meh, just live in the moment.
-            date = time.parse("now")
+            date = jrnl_time.parse("now")
         entry = Entry.Entry(self, date, title, body, starred=starred)
         entry.modified = True
         self.entries.append(entry)

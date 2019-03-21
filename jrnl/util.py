@@ -3,7 +3,7 @@
 import sys
 import os
 import getpass as gp
-import keyring
+#import keyring
 import json
 if "win32" in sys.platform:
     import colorama
@@ -82,12 +82,32 @@ def prompt(msg):
 
 def py23_input(msg=""):
     prompt(msg)
-    return u(STDIN.readline()).strip()
+    #return u(STDIN.readline()).strip()
+    return u(raw_input(": ")).strip()
 
 def py23_read(msg=""):
-    prompt(msg)
-    return u(STDIN.read())
-
+    print(msg)
+    
+    # third method by cosmic_onion
+    # https://stackoverflow.com/questions/46003639/how-to-read-user-input-until-eof-in-python
+    
+    complete_inout = ""
+    while True:
+        try:
+            line = raw_input() + '\n'
+        except (EOFError):
+            break #end of file reached
+        
+        # empty line entered
+        #if line == '':
+        #    break;
+            
+        complete_inout += line
+        
+    return u(complete_inout)
+    
+    #return u(raw_input(msg))
+    
 def yesno(prompt, default=True):
     prompt = prompt.strip() + (" [Y/n]" if default else " [y/N]")
     raw = py23_input(prompt)
