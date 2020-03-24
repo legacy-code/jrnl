@@ -8,19 +8,18 @@
 """
 
 from __future__ import absolute_import, unicode_literals
-import Journal
-#import DayOneJournal
-import util
-import exporters
-import install
-
-#import jrnl
-import Journal
 
 import os
 import argparse
 import sys
 import logging
+
+#import DayOneJournal
+import util
+import exporters
+import install
+
+import Journal
 
 xdg_config = os.environ.get('XDG_CONFIG_HOME')
 CONFIG_PATH = os.path.join(xdg_config, "jrnl") if xdg_config else os.path.expanduser('~/.jrnl_config')
